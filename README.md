@@ -1,66 +1,39 @@
-## Foundry
+# Smart Contract Lottery (Raffle) — Chainlink VRF
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A decentralized, provably fair raffle contract built with Foundry. Uses Chainlink VRF 
+for verifiable randomness and Chainlink Automation to trigger the draw automatically 
+on a time interval, without any centralized party picking the winner.
 
-Foundry consists of:
+## How it works
+- Users enter the raffle by sending ETH via `enterRaffle()`
+- After a set time interval, Chainlink Automation triggers `performUpkeep`
+- This requests a random number from Chainlink VRF
+- The VRF callback (`fulfillRandomWords`) picks and pays the winner
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Tech stack
+- Solidity ^0.8.x
+- Foundry (Forge, Anvil, Cast)
+- Chainlink VRF v2 (mocked locally, live on Sepolia)
+- Chainlink Automation
 
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
+## Setup
 ```shell
-$ forge build
+git clone --recurse-submodules https://github.com/Zaibiii12/smart-contract-lottery.git
+cd smart-contract-lottery
+forge install
+forge build
+forge test
 ```
 
-### Test
-
+## Deploy (Sepolia)
 ```shell
-$ forge test
+forge script script/DeployRaffle.s.sol --rpc-url $SEPOLIA_RPC_URL --account <your-account> --broadcast
 ```
 
-### Format
+## What I learned / issues solved
+- Chainlink restructured their contract repo mid-course; had to remap imports 
+  from the old `interfaces/` path to the new `shared/interfaces/` path.
+- [add more as you go — e.g. VRF mock setup, gas optimization notes, testing approach]
 
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+## Status
+🚧 In progress — currently implementing VRF mock deployment and Automation integration.
