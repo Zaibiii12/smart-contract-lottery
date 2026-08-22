@@ -4,8 +4,8 @@ import {Script} from "forge-std/Script.sol";
 import {VRFCoordinatorV2_5Mock} from "chainlink-evm/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
 
 abstract contract CodeConstants {
-    uint256 public MOCK_BASE_FEE = 0.25 ether;
-    uint256 public MOCK_GAS_PRICE_LINK = 1e9; // 0.000000001 LINK per gas
+    uint96 public MOCK_BASE_FEE = 0.25 ether;
+    uint96 public MOCK_GAS_PRICE_LINK = 1e9; // 0.000000001 LINK per gas
     int256 public MOCK_WEI_PER_UNIT_LINK = 4e15; // 1
     uint256 public constant SEPOLIA_CHAIN_ID = 11155111;
     uint256 public constant LOCALHOST_CHAIN_ID = 31337;
@@ -65,7 +65,7 @@ contract HelperConfig is CodeConstants, Script {
             localNetworkConfig = NetworkConfig({
                 entranceFee: 0.01 ether,
                 interval: 30,
-                vrfCoordinator: address(vrfCoordinatorMock),
+                vrfCoordinator: address(vrfCoordinator),
                 keyHash: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae,
                 subscriptionId: 0,
                 callbackGasLimit: 500000
