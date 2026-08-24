@@ -32,4 +32,6 @@ jobs:
         run: forge build --sizes
 
       - name: Run Forge tests
-        run: forge test -vvv
+        - run: forge test -vvv
+    env:
+    DEPLOYER_ADDRESS: ${{ secrets.DEPLOYER_ADDRESS }}
