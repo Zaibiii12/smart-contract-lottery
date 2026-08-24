@@ -63,4 +63,4 @@ forge script script/DeployRaffle.s.sol --rpc-url $SEPOLIA_RPC_URL --account <you
 
 ## Status
 ✅ Compiles clean, CI passing
-🚧 In progress — VRF mock deployment, Automation integration, and unit/fuzz tests still to come
+✅ Compiles clean, CI passing, unit + fuzz tests passing (local/Anvil)
