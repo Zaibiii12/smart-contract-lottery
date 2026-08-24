@@ -88,6 +88,8 @@ contract Raffle is VRFConsumerBaseV2Plus {
             revert Raffle__upKeepNotNeeded(address(this).balance, s_players.length, uint256(s_raffleState));
         }
 
+        s_raffleState = RaffleState.CALCULATING;
+
         uint256 requestId = s_vrfCoordinator.requestRandomWords(
             VRFV2PlusClient.RandomWordsRequest({
                 keyHash: i_keyHash,
@@ -130,5 +132,9 @@ contract Raffle is VRFConsumerBaseV2Plus {
 
     function getRaffleState() external view returns (RaffleState) {
         return s_raffleState;
+    }
+
+    function getPlayer(uint256 indexOfPlayer) external view returns (address) {
+        return s_players[indexOfPlayer];
     }
 }

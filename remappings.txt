@@ -3,3 +3,4 @@ chainlink-evm/=lib/chainlink-evm/
 @chainlink/contracts/=lib/chainlink-brownie-contracts/
 chainlink-brownie-contracts/=lib/chainlink-brownie-contracts/
 @openzeppelin/contracts@4.9.6/=lib/openzeppelin-contracts/contracts/
+@solmate/=lib/solmate/src/

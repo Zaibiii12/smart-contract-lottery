@@ -2,6 +2,7 @@
 pragma solidity ^0.8.19;
 import {Script} from "forge-std/Script.sol";
 import {VRFCoordinatorV2_5Mock} from "chainlink-evm/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
+import {LinkToken} from "test/mocks/LinkToken.sol";
 
 abstract contract CodeConstants {
     uint96 public MOCK_BASE_FEE = 0.25 ether;
@@ -21,6 +22,7 @@ contract HelperConfig is CodeConstants, Script {
         bytes32 keyHash;
         uint256 subscriptionId;
         uint32 callbackGasLimit;
+        address link;
     }
     NetworkConfig public localNetworkConfig;
     mapping(uint256 chainId => NetworkConfig) public networkConfigs;
@@ -39,7 +41,7 @@ contract HelperConfig is CodeConstants, Script {
         }
     }
 
-    function getCongig() public returns (NetworkConfig memory) {
+    function getConfig() public returns (NetworkConfig memory) {
         return getConfigByChainId(block.chainid);
     }
 
@@ -49,8 +51,9 @@ contract HelperConfig is CodeConstants, Script {
             interval: 30,
             vrfCoordinator: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B,
             keyHash: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae,
-            subscriptionId: 0,
-            callbackGasLimit: 500000
+            subscriptionId: 73844506659032581009953857358899088571561772093848094369096348397458738940096,
+            callbackGasLimit: 500000,
+            link: 0x779877A7B0D9E8603169DdbD7836e478b4624789
         });
     }
 
@@ -61,6 +64,7 @@ contract HelperConfig is CodeConstants, Script {
             vm.startBroadcast();
             VRFCoordinatorV2_5Mock vrfCoordinator =
                 new VRFCoordinatorV2_5Mock(MOCK_BASE_FEE, MOCK_GAS_PRICE_LINK, MOCK_WEI_PER_UNIT_LINK);
+            LinkToken link = new LinkToken();
             vm.stopBroadcast();
             localNetworkConfig = NetworkConfig({
                 entranceFee: 0.01 ether,
@@ -68,7 +72,8 @@ contract HelperConfig is CodeConstants, Script {
                 vrfCoordinator: address(vrfCoordinator),
                 keyHash: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae,
                 subscriptionId: 0,
-                callbackGasLimit: 500000
+                callbackGasLimit: 500000,
+                link: address(link)
             });
             return localNetworkConfig;
         }
